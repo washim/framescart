@@ -187,5 +187,3 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 # see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-RAZORPAY_LIVE_KEY = ["rzp_live_rGJH8hVXGEpbLR", "H5hQCZYKpYXmCBb4xaYPxD8l"]
-RAZORPAY_TEST_KEY = ["rzp_test_7SJOCGExSKdA95", "zIUmYav92RGUXS1zp5fS0Eww"]
