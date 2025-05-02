@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags product_attributes %}
+
+{% block content %}
+<div class="uk-container">
+    {% include "elements/breadcrumb.html" %}
+    <div class="uk-flex" uk-grid>
+        <div class="uk-width-2-3@m">
+            <div uk-slideshow="animation: fade; ratio: 11:7">
+                <div class="uk-slideshow-items">
+                    {% for block in page.widgets %}
+                        {% if block.block_type == "product_images" %}
+                            {% for pimg in block.value %}
+                            <div>{% image pimg width-800 height-800 %}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <ul class="uk-thumbnav uk-margin">
+                    {% for block in page.widgets %}
+                        {% if block.block_type == "product_images" %}
+                            {% for pimg in block.value %}
+                            <li uk-slideshow-item="{{ forloop.counter0 }}"><a href="#">{% image pimg fill-80x50 %}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {{ page.description|richtext }}
+        </div>
+        <div class="uk-width-1-3@m">
+            <h2>{{ page.title }}</h2>
+            <h3 class="uk-margin-remove">₹{{ page.price }}</h3>
+            <div class="uk-background-muted uk-padding-small">
+                {% if page.product_rating == 1 %}
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                {% elif page.product_rating == 2 %}
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                {% elif page.product_rating == 3 %}
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                {% elif page.product_rating == 4 %}
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                {% elif page.product_rating == 5 %}
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+                {% else %}
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
+                {% endif %}
+                <span style="color: black; top: 3px; position: relative;">Based On Reviews</span>
+            </div>
+            <razorpay-trusted-business key="rzp_live_rGJH8hVXGEpbLR"></razorpay-trusted-business>
+            {{ page.summary|richtext }}
+            {% for block in page.widgets %}
+                {% if block.block_type == "product_options" %}
+                <h4 class="uk-margin-remove-top">Product Options</h4>
+                <form class="uk-form-stacked" method="post">
+                    {% csrf_token %}
+                    {% for product_option in block.value %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label">{{product_option.product_attribute_key}}</label>
+                        <div class="uk-form-controls">
+                             <select class="uk-select" name="{{product_option.product_attribute_key}}">
+                                {% get_attribute_values product_option.product_attribute_values as results %}
+                                {% for item in results %}
+                                <option>{{ item }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label">Quantity</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" name="quantity">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input class="uk-button uk-button-primary" type="submit" value="Buy Now"/>
+                </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% for block in page.widgets %}
+        {% if block.block_type == "customer_reviews" %}
+        <div class="uk-flex" uk-grid>
+            <div class="uk-width-2-3@m">
+                <h3>Customer Reviews</h3>
+                <ul class="uk-comment-list">
+                    {% for reviewer in block.value %}
+                    <li class="uk-margin">
+                        <article class="uk-comment uk-comment-primary" role="comment">
+                            <header class="uk-comment-header">
+                                <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <img class="uk-comment-avatar" src="https://ui-avatars.com/api/?name={{reviewer.name}}" width="50" height="50" alt="">
+                                    </div>
+                                    <div class="uk-width-expand">
+                                        <h4 class="uk-comment-title uk-margin-remove">{{reviewer.name}}</h4>
+                                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                            <li>
+                                                {% if reviewer.ratting_given == 1 %}
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% elif reviewer.ratting_given == 2 %}
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% elif reviewer.ratting_given == 3 %}
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% elif reviewer.ratting_given == 4 %}
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% elif reviewer.ratting_given == 5 %}
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% else %}
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+                                                {% endif %}
+                                            </li>
+                                            <li>{% if reviewer.customer_verified %}Verified{% else %}unknown{% endif %}</li>
+                                            <li>{{ reviewer.customer_location }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="uk-comment-body">
+                                <p>{{ reviewer.comments }}</p>
+                            </div>
+                        </article>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<div id="personalize" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Personalize Your Product</h3>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-stacked">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Upload Images To Print</label>
+                    <div uk-form-custom>
+                        <input type="file" aria-label="Custom controls">
+                        <button class="uk-button uk-button-primary" type="button" tabindex="-1">Upload Image 1</button>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div uk-form-custom>
+                        <input type="file" aria-label="Custom controls">
+                        <button class="uk-button uk-button-primary" type="button" tabindex="-1">Upload Image 2</button>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div uk-form-custom>
+                        <input type="file" aria-label="Custom controls">
+                        <button class="uk-button uk-button-primary" type="button" tabindex="-1">Upload Image 3</button>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div uk-form-custom>
+                        <input type="file" aria-label="Custom controls">
+                        <button class="uk-button uk-button-primary" type="button" tabindex="-1">Upload Image 4</button>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div uk-form-custom>
+                        <input type="file" aria-label="Custom controls">
+                        <button class="uk-button uk-button-primary" type="button" tabindex="-1">Upload Image 5</button>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div>You can also contact us in our whatsapp number if require any assistant.</div>
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <a href="#checkout" class="uk-button uk-button-secondary" uk-toggle>Next</a>
+        </div>
+    </div>
+</div>
+
+<div id="checkout" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Checkout Details</h3>
+        </div>
+        <div class="uk-modal-body">
+            <form class="uk-form-stacked">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Your Name</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Mobile Number</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Shipping Address</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">City</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">State</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Pincode</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <a href="#personalize" class="uk-button uk-button-secondary hide-small" uk-toggle>Previous</a>
+            <button class="uk-button uk-button-primary" type="button">Order Now</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

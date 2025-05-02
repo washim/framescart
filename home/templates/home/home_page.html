@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static wagtailimages_tags wagtailcore_tags %}
+
+{% block content %}
+{% for block in page.widgets %}
+    {% if block.block_type == "carousel_image" %}
+        <div class="uk-position-relative uk-visible-toggle uk-light" uk-slideshow="autoplay: true; animation: fade; ratio: 12:3;" uk-slideshow>
+            <div class="uk-slideshow-items">
+                {% for img in block.value %}
+                <div>
+                    {% image img original class="uk-cover" %}
+                </div>
+                {% endfor %}
+            </div>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next uk-slideshow-item="next"></a>
+        </div>
+    {% elif block.block_type == "product_search" %}
+        {% if block.value %}
+            {% include "elements/gift-search.html" %}
+        {% endif %}
+    {% elif block.block_type == "personalised_category" %}
+        <div class="uk-container margin-bottom-widget">
+            <h2 style="text-align: center;">{{ block.value.heading }}</h2>
+            <hr class="uk-divider-icon">
+            {% for cimg in block.value.category_image %}
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-6">
+                    <div class="uk-flex uk-flex-column">
+                        {% image cimg original as cate_image %}
+                        {% image cimg original class="uk-width-1-1" %}
+                        <a style="text-align: center; margin-top: 10px;" href="#">{{cate_image.image.title}}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% elif block.block_type == "trending" %}
+        <div class="uk-container margin-bottom-widget">
+            <h2 style="text-align: center;">{{ block.value.heading }}</h2>
+            <hr class="uk-divider-icon">
+            <div class="uk-grid-small" uk-grid>
+                {% for trending_card in block.value.card %}
+                <div class="uk-width-1-2@s uk-width-1-4@m">
+                    <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
+                        <div class="uk-card-media-top">
+                            {% image trending_card.card_image original style="width: 100%;" %}
+                        </div>
+                        <div class="uk-card-body uk-padding-small">
+                            <p>{{trending_card.title}}</p>
+                            <h3 class="uk-card-title uk-margin-remove">₹{{trending_card.price}}</h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+{% endblock content %}

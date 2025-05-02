@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-container">
+    <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom">{{title}}</h3>
+    {{body|safe}}
+</div>
+{% endblock %}

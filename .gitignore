@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.pot
+*.db
+media/
+tmp/
+temp/
+*.swp
+.DS_Store
+.vscode/
+*.lock
+*.sqlite3
+production.py

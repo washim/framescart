@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-container">
+    <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom">Upload file to print in your purchased product</h3>
+    <form enctype="multipart/form-data" class="uk-form-stacked" method="post">
+        {% csrf_token %}
+        <div uk-form-custom="target: true">
+            <input name="file" type="file" required/>
+            <input class="uk-input uk-form-width-medium{% if error_message %} field-danger{% endif %}" type="text" placeholder="Select zip or png file" disabled/>
+        </div>
+        <input class="uk-button uk-button-primary" type="submit" value="Upload"/>
+        {% if error_message %}
+        <ul class="uk-list uk-margin-remove-top">
+            <li class="uk-text-danger uk-text-small">{{error_message}}</li>
+        </ul>
+        {% endif %}
+    </form>
+    <p>We will notify you when your product will ready for dispatch. For any help or queries feel free to contact us.</p>
+    <h4>Upload Instruction</h4>
+    <ul>
+        <li>File should be either png or zip</li>
+        <li>File size should not exceed 10MB</li>
+        <li>File name should contain order number</li>
+        <li>File upload allow only once. If you want to change this then you need to send the file our business whatsapp number</li>
+    </ul>
+    <p></p>
+</div>
+{% endblock %}

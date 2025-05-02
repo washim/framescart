@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Exo:500,600,700|Roboto&display=swap");
+body {
+    font-family: "Exo", sans-serif;
+}
+.uk-subnav>*>:first-child {
+    color: darkgreen;
+}
+h1, h2, h3, h4 {
+    font-family: "Exo", sans-serif;
+}
+h4 {
+    font-weight: 600;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+.margin-bottom-widget {
+    margin-bottom: 20px;
+}
+.logo {
+    position: relative;
+    left: -10px;
+}
+.red-star {
+    color: red !important;
+}
+.uk-table td, .uk-table th {
+    padding: 5px 12px;
+}
+.uk-comment-title, .uk-form-label {
+    font-size: 16px;
+    font-weight: 600;
+}
+.field-danger {
+    border-color: #f0506e !important;
+}
+@media only screen and (max-width: 600px) {
+    .hide-small {
+        display: none;
+    }
+}
