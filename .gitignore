@@ -5,11 +5,17 @@ __pycache__/
 *.pot
 *.db
 media/
+static/
 tmp/
 temp/
 *.swp
 .DS_Store
 .vscode/
 *.lock
+*.out
 *.sqlite3
+.ipynb_checkpoints/
+manage.py
+wsgi.py
 production.py
+runserver
