@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="uk-container">
+    <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom">{{ page.title }}</h3>
+    {{ page.body|richtext }}
+    <p></p>
+</div>
+{% endblock %}

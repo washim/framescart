@@ -8,6 +8,7 @@ SECRET_KEY = "django-insecure-4mb%322u5s!y6n%4ty04ju9m17keo-lj!whk6j41_1%*9t0v6b
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
+RAZORPAY_TEST_KEY = ["rzp_test_7SJOCGExSKdA95", "zIUmYav92RGUXS1zp5fS0Eww"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
