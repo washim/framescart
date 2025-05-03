@@ -23,8 +23,8 @@
         <div class="uk-container margin-bottom-widget">
             <h2 style="text-align: center;">{{ block.value.heading }}</h2>
             <hr class="uk-divider-icon">
-            {% for cimg in block.value.category_image %}
             <div class="uk-grid-small" uk-grid>
+                {% for cimg in block.value.category_image %}
                 <div class="uk-width-1-6">
                     <div class="uk-flex uk-flex-column">
                         {% image cimg original as cate_image %}
@@ -32,8 +32,8 @@
                         <a style="text-align: center; margin-top: 10px;" href="#">{{cate_image.image.title}}</a>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     {% elif block.block_type == "trending" %}
         <div class="uk-container margin-bottom-widget">
