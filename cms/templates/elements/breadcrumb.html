@@ -1,0 +1,15 @@
+<nav style="margin-top: 15px;" aria-label="Breadcrumb">
+    <ul class="uk-breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Birthday</a></li>
+        <li><span aria-current="page">Personalised Mug for Wife Birthday (11oz)</span></li>
+    </ul>
+</nav>
+{% if messages %}
+  {% for message in messages %}
+  <div class="uk-alert-{{ message.tags }}" uk-alert>
+      <a href class="uk-alert-close" uk-close></a>
+      <p>{{ message }}</p>
+  </div>
+  {% endfor %}
+{% endif %}
