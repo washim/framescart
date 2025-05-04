@@ -29,7 +29,8 @@ class HomePage(Page):
                 ('price', blocks.CharBlock(required=True)),
                 ('card_image', ImageBlock(required=True)),
             ]))),
-        ]))
+        ])),
+        ("html_panels", blocks.TextBlock(required=True)),
     ], blank=True, null=True)
     body = RichTextField(blank=True, null=True)
 

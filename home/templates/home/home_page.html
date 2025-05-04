@@ -19,6 +19,8 @@
         {% if block.value %}
             {% include "elements/gift-search.html" %}
         {% endif %}
+    {% elif block.block_type == "html_panels" %}
+        {{block.value|safe}}
     {% elif block.block_type == "personalised_category" %}
         <div class="uk-container margin-bottom-widget">
             <h2 style="text-align: center;">{{ block.value.heading }}</h2>
