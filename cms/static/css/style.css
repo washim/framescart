@@ -34,6 +34,9 @@ h4 {
 .field-danger {
     border-color: #f0506e !important;
 }
+.text-decoration-remove {
+    text-decoration: none !important;
+}
 @media only screen and (max-width: 600px) {
     .hide-small {
         display: none;

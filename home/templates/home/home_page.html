@@ -43,7 +43,7 @@
             <hr class="uk-divider-icon">
             <div class="uk-grid-small" uk-grid>
                 {% for trending_card in block.value.card %}
-                <a href="{{trending_card.page.url}}" class="uk-width-1-2@s uk-width-1-4@m">
+                <a href="{{trending_card.page.url}}" class="text-decoration-remove uk-width-1-2@s uk-width-1-4@m">
                     <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
                         <div class="uk-card-media-top">
                             {% image trending_card.card_image original style="width: 100%;" %}
