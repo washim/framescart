@@ -29,9 +29,9 @@
                 {% for cimg in block.value.category_image %}
                 <div class="uk-width-1-6">
                     <div class="uk-flex uk-flex-column">
-                        {% image cimg original as cate_image %}
-                        {% image cimg original class="uk-width-1-1" %}
-                        <a style="text-align: center; margin-top: 10px;" href="#">{{cate_image.image.title}}</a>
+                        {% image cimg.picture original as cate_image %}
+                        {% image cimg.picture original class="uk-width-1-1" %}
+                        <a style="text-align: center; margin-top: 10px;" href="{{cimg.page.url}}">{{cate_image.image.title}}</a>
                     </div>
                 </div>
                 {% endfor %}

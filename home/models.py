@@ -20,7 +20,10 @@ class HomePage(Page):
         ("product_search", blocks.BooleanBlock()),
         ("personalised_category", blocks.StructBlock([
             ('heading', blocks.CharBlock(required=True)),
-            ('category_image', blocks.ListBlock(ImageBlock(required=True))),
+            ('category_image', blocks.ListBlock(blocks.StructBlock([
+                ("picture", ImageBlock(required=True)),
+                ("page", blocks.PageChooserBlock(required=True))
+            ]))),
         ])),
         ("trending", blocks.StructBlock([
             ('heading', blocks.CharBlock(required=True)),
