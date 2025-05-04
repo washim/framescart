@@ -22,7 +22,7 @@ class HomePage(Page):
             ('heading', blocks.CharBlock(required=True)),
             ('category_image', blocks.ListBlock(blocks.StructBlock([
                 ("picture", ImageBlock(required=True)),
-                ("page", blocks.PageChooserBlock(required=False))
+                ("page", blocks.PageChooserBlock(required=False)),
             ]))),
         ])),
         ("trending", blocks.StructBlock([
@@ -31,6 +31,7 @@ class HomePage(Page):
                 ('title', blocks.CharBlock(required=True)),
                 ('price', blocks.CharBlock(required=True)),
                 ('card_image', ImageBlock(required=True)),
+                ("page", blocks.PageChooserBlock(required=False)),
             ]))),
         ])),
         ("html_panels", blocks.TextBlock(required=True)),
