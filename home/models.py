@@ -28,8 +28,6 @@ class HomePage(Page):
         ("trending", blocks.StructBlock([
             ('heading', blocks.CharBlock(required=True)),
             ('card', blocks.ListBlock(blocks.StructBlock([
-                ('title', blocks.CharBlock(required=True)),
-                ('price', blocks.CharBlock(required=True)),
                 ('card_image', ImageBlock(required=True)),
                 ("page", blocks.PageChooserBlock(required=False)),
             ]))),
