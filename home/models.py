@@ -22,7 +22,7 @@ class HomePage(Page):
             ('heading', blocks.CharBlock(required=True)),
             ('category_image', blocks.ListBlock(blocks.StructBlock([
                 ("picture", ImageBlock(required=True)),
-                ("page", blocks.PageChooserBlock(required=True))
+                ("page", blocks.PageChooserBlock(required=False))
             ]))),
         ])),
         ("trending", blocks.StructBlock([
