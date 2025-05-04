@@ -64,20 +64,20 @@ class ProductPage(RoutablePageMixin, Page):
                 total_due += price_modifier
             
             quantity = int(request.POST["quantity"])
-            final_due = total_due * quantityorder_QPyo8KkJZWlRGp.png
+            final_due = total_due * quantity
             razorpay_order = self.client.order.create({
                 "amount": final_due * 100,
                 "currency": "INR",
-                "receipt": self.url,
-                # "line_items_total": final_due * 100,
-                # "line_items": [
-                #     {
-                #         "name": self.title,
-                #         "price": total_due * 100,
-                #         "quantity": quantity,
-                #         "image_url": "https://framescart.in/images/service/photo-framing-service.jpg"
-                #     }
-                # ],
+                "receipt": "New Order",
+                "line_items_total": final_due * 100,
+                "line_items": [
+                    {
+                        "name": self.title,
+                        "price": total_due * 100,
+                        "quantity": quantity,
+                        "image_url": "https://framescart.in/images/service/photo-framing-service.jpg"
+                    }
+                ],
                 "notes": {
                     "product_id": str(self.id),
                     "name": self.title,
@@ -88,7 +88,7 @@ class ProductPage(RoutablePageMixin, Page):
                 }
             })
 
-            return HttpResponseRedirect(f"/{self.slug}/checkout/{razorpay_order['id']}/")
+            return HttpResponseRedirect(f"{self.url}checkout/{razorpay_order['id']}/")
 
         return self.render(request)
 
@@ -102,16 +102,16 @@ class ProductPage(RoutablePageMixin, Page):
                     context_overrides={
                         "order": order_details, 
                         "razorpay_key": self.key,
-                        "callback_url": f"/{self.slug}/verify/"
+                        "callback_url": f"{self.url}verify/"
                     }, 
                     template="product/checkout.html"
                 )
             
             else:
-                return HttpResponseRedirect(f"/{self.slug}")
+                return HttpResponseRedirect(self.url)
         
         except Exception:
-            return HttpResponseRedirect(f"/{self.slug}")
+            return HttpResponseRedirect(self.url)
 
     @path('verify/')
     def verify_order(self, request):
@@ -126,16 +126,16 @@ class ProductPage(RoutablePageMixin, Page):
                 "razorpay_signature": signature
             })
             
-            return HttpResponseRedirect(f"/{self.slug}/success/{order_id}/")
+            return HttpResponseRedirect(f"{self.url}success/{order_id}/")
         
         except Exception:
-            return HttpResponseRedirect(f"/{self.slug}")
+            return HttpResponseRedirect(self.slug)
 
     @path('success/<str:order_id>/')
     def successfull_order(self, request, order_id=None):
         extra_context = {
             "title": "Order Created",
-            "body": f"We received your payment and your order has been created successfully. Upload images to print in your product.<br/><br/><a class='uk-button uk-button-primary' href='/{self.slug}/upload/{order_id}/'>Upload Now</a><br/><br/>"
+            "body": f"We received your payment and your order has been created successfully. Upload images to print in your product.<br/><br/><a class='uk-button uk-button-primary' href='{self.url}upload/{order_id}/'>Upload Now</a><br/><br/>"
         }
         return self.render(request, context_overrides=extra_context, template="product/result.html")
 
@@ -143,7 +143,7 @@ class ProductPage(RoutablePageMixin, Page):
     def failed_order(self, request):
         extra_context = {
             "title": "Order Failed",
-            "body": "Order creation failed. Please try again later. <a href='/"+self.slug+"'>Go Back</a>"
+            "body": "Order creation failed. Please try again later. <a href='"+self.url+"'>Go Back</a>"
         }
         return self.render(request, context_overrides=extra_context, template="product/result.html")
 
