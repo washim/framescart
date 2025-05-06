@@ -74,7 +74,7 @@ class ProductPage(RoutablePageMixin, Page):
                     "product_id": str(self.id),
                     "name": self.title,
                     "base_price": self.price,
-                    "paid": final_due * 100,
+                    "paid": final_due,
                     "quantity": quantity,
                     "product_options": ",".join(product_values),
                     "product_url": self.url
