@@ -50,7 +50,7 @@ class ProductPage(RoutablePageMixin, Page):
 
     content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "widgets"]
 
-    key, secret = settings.RAZORPAY_LIVE_KEY
+    key, secret = settings.RAZORPAY_LIVE_KEY if settings.RAZORPAY_SANDBOX == "no" else settings.RAZORPAY_TEST_KEY
     client = razorpay.Client(auth=(key, secret))
 
     @path('')
@@ -89,21 +89,21 @@ class ProductPage(RoutablePageMixin, Page):
     def checkout_details(self, request, order_id=None):
         try:
             order_details = self.client.order.fetch(order_id)
-            if order_details["id"]:
-                return self.render(
-                    request, 
-                    context_overrides={
-                        "order": order_details, 
-                        "razorpay_key": self.key,
-                        "callback_url": f"{self.url}verify/"
-                    }, 
-                    template="product/checkout.html"
-                )
+        except Exception:
+            return HttpResponseRedirect(f"{self.url}failed/")
+
+        if order_details.get("id"):
+            if order_details.get("status") == "paid":
+                extra_context = {
+                    "title": "Payment Completed",
+                    "body": "Order already completed. If you have any issue please contact with us."
+                }
+                return self.render(request, context_overrides=extra_context, template="product/result.html")
             
             else:
-                return HttpResponseRedirect(self.url)
+                return self.render(request, context_overrides={"order": order_details, "razorpay_key": self.key, "callback_url": f"{self.url}verify/"}, template="product/checkout.html")
         
-        except Exception:
+        else:
             return HttpResponseRedirect(self.url)
 
     @path('verify/')
@@ -131,6 +131,13 @@ class ProductPage(RoutablePageMixin, Page):
             order = self.client.order.fetch(order_id)
         except Exception:
             return HttpResponseRedirect(f"{self.url}failed/")
+
+        if order.get("notes").get("fullname"):
+            extra_context = {
+                "title": "Shipping Details Exist",
+                "body": "Shipping details already exist in our system submitted by you. If you have any issue please contact with us."
+            }
+            return self.render(request, context_overrides=extra_context, template="product/result.html")
         
         if order.get("id"):
             form = ShippingForm(initial=order["notes"])
