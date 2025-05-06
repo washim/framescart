@@ -10,6 +10,7 @@ from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks
 from wagtail.images.blocks import ImageBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path
+from .forms import ShippingForm
 
 
 class ProductOrder(models.Model):
@@ -69,22 +70,14 @@ class ProductPage(RoutablePageMixin, Page):
                 "amount": final_due * 100,
                 "currency": "INR",
                 "receipt": "New Order",
-                "line_items_total": final_due * 100,
-                "line_items": [
-                    {
-                        "name": self.title,
-                        "price": total_due * 100,
-                        "quantity": quantity,
-                        "image_url": "https://framescart.in/images/service/photo-framing-service.jpg"
-                    }
-                ],
                 "notes": {
                     "product_id": str(self.id),
                     "name": self.title,
                     "base_price": self.price,
-                    "paid": final_due,
+                    "paid": final_due * 100,
                     "quantity": quantity,
-                    "product_options": ",".join(product_values)
+                    "product_options": ",".join(product_values),
+                    "product_url": self.url
                 }
             })
 
@@ -93,7 +86,7 @@ class ProductPage(RoutablePageMixin, Page):
         return self.render(request)
 
     @path('checkout/<str:order_id>/')
-    def order_details(self, request, order_id=None):
+    def checkout_details(self, request, order_id=None):
         try:
             order_details = self.client.order.fetch(order_id)
             if order_details["id"]:
@@ -126,18 +119,40 @@ class ProductPage(RoutablePageMixin, Page):
                 "razorpay_signature": signature
             })
             
-            return HttpResponseRedirect(f"{self.url}success/{order_id}/")
+            return HttpResponseRedirect(f"{self.url}shipping-details/{order_id}/")
         
         except Exception:
             return HttpResponseRedirect(self.slug)
 
-    @path('success/<str:order_id>/')
-    def successfull_order(self, request, order_id=None):
-        extra_context = {
-            "title": "Order Created",
-            "body": f"We received your payment and your order has been created successfully. Upload images to print in your product.<br/><br/><a class='uk-button uk-button-primary' href='{self.url}upload/{order_id}/'>Upload Now</a><br/><br/>"
-        }
-        return self.render(request, context_overrides=extra_context, template="product/result.html")
+    @path('shipping-details/<str:order_id>/')
+    def shipping_details(self, request, order_id=None):
+        form = ShippingForm()
+        try:
+            order = self.client.order.fetch(order_id)
+        except Exception:
+            return HttpResponseRedirect(f"{self.url}failed/")
+        
+        if order.get("id"):
+            form = ShippingForm(initial=order["notes"])
+        
+        if request.method == 'POST':
+            form = ShippingForm(request.POST)
+            if form.is_valid():
+                self.client.order.edit(order_id,{
+                    "notes": {
+                        "address_line_1": form.cleaned_data["address_line_1"],
+                        "address_line_2": form.cleaned_data["address_line_2"],
+                        "fullname": form.cleaned_data["fullname"],
+                        "city": form.cleaned_data["city"],
+                        "state": form.cleaned_data["state"],
+                        "pincode": form.cleaned_data["pincode"],
+                        "mobile": form.cleaned_data["mobile"],
+                        "email": form.cleaned_data["email"],
+                    }
+                })
+                return HttpResponseRedirect(f"{self.url}upload/{order_id}/")
+        
+        return self.render(request, context_overrides={"form": form}, template="product/shipping.html")
 
     @path('failed/')
     def failed_order(self, request):
@@ -149,7 +164,9 @@ class ProductPage(RoutablePageMixin, Page):
 
     @path('upload/<str:order_id>/')
     def upload_personalised_images(self, request, order_id=None):
-        context = {}
+        context = {
+            "order_id": order_id
+        }
         file_size_limit = 10 * 1024 * 1024 - 1 #10MB
         if request.method == "POST":
             file = request.FILES.get("file")
@@ -170,7 +187,7 @@ class ProductPage(RoutablePageMixin, Page):
                         
                         extra_context = {
                             "title": "Order Completed",
-                            "body": "All set and relax. We will notify you when product will dispatch after printing. <a href='/'>Keep Shoping</a>"
+                            "body": "Relax. We will notify you when product will dispatch after printing. <a href='/'>Keep Shopping</a>"
                         }
                         
                         return self.render(request, context_overrides=extra_context, template="product/result.html")

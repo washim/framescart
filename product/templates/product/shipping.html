@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-container">
+    <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom uk-margin-remove-bottom">Shipping Details</h3>
+    <div class="uk-grid-small uk-grid">
+        <div class="uk-width-1-2@m">
+            <form class="uk-form-stacked" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.pincode.errors %} input-danger{% endif %}">
+                        {{ form.pincode }}
+                    </div>
+                    {% if form.pincode.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.pincode.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="uk-grid-small uk-grid">
+                    <div class="uk-width-1-2@m">
+                        <div class="uk-margin">
+                            <div class="uk-form-controls{% if form.city.errors %} input-danger{% endif %}">
+                                {{ form.city }}
+                            </div>
+                            {% if form.city.errors %}
+                                <ul class="uk-list uk-margin-remove-top">
+                                {% for error in form.city.errors %}
+                                    <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="uk-width-1-2@m">
+                        <div class="uk-margin">
+                            <div class="uk-form-controls{% if form.state.errors %} input-danger{% endif %}">
+                                {{ form.state }}
+                            </div>
+                            {% if form.state.errors %}
+                                <ul class="uk-list uk-margin-remove-top">
+                                {% for error in form.state.errors %}
+                                    <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.fullname.errors %} input-danger{% endif %}">
+                        {{ form.fullname }}
+                    </div>
+                    {% if form.fullname.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.fullname.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.address_line_1.errors %} input-danger{% endif %}">
+                        {{ form.address_line_1 }}
+                    </div>
+                    {% if form.address_line_1.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.address_line_1.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.address_line_2.errors %} input-danger{% endif %}">
+                        {{ form.address_line_2 }}
+                    </div>
+                    {% if form.address_line_2.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.address_line_2.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.mobile.errors %} input-danger{% endif %}">
+                        {{ form.mobile }}
+                    </div>
+                    {% if form.mobile.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.mobile.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-form-controls{% if form.email.errors %} input-danger{% endif %}">
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                        <ul class="uk-list uk-margin-remove-top">
+                        {% for error in form.email.errors %}
+                            <li class="uk-text-danger uk-text-small">{{ error|escape }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <input class="uk-button uk-button-primary margin-bottom-widget" type="submit" value="Submit"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -17,6 +17,9 @@
             }
         };
         const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+            window.location.href = "{{page.url}}failed/";
+        });
         rzp.open();
     };
 </script>
@@ -24,6 +27,6 @@
 
 {% block content %}
 <div class="uk-container uk-padding-small">
-    Please wait..
+    Processing for payment
 </div>
 {% endblock %}

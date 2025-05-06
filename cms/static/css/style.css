@@ -34,6 +34,10 @@ h4 {
 .field-danger {
     border-color: #f0506e !important;
 }
+.input-danger input {
+    color: #f0506e !important;
+    border-color: #f0506e !important;
+}
 .text-decoration-remove {
     text-decoration: none !important;
 }
