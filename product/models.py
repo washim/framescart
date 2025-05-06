@@ -32,6 +32,7 @@ class ProductPage(RoutablePageMixin, Page):
     summary = RichTextField(blank=True)
     product_rating = models.IntegerField(default=3)
     price = models.IntegerField(default=300)
+    personalized = models.BooleanField(default=True)
     widgets = StreamField([
         ("product_images", blocks.ListBlock(ImageBlock(required=True))),
         ("product_options", blocks.ListBlock(blocks.StructBlock([
@@ -48,7 +49,7 @@ class ProductPage(RoutablePageMixin, Page):
         ("breadcrumb", blocks.TextBlock(required=True)),
     ], blank=True, null=True)
 
-    content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "widgets"]
+    content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "personalized", "widgets"]
 
     key, secret = settings.RAZORPAY_LIVE_KEY if settings.RAZORPAY_SANDBOX == "no" else settings.RAZORPAY_TEST_KEY
     client = razorpay.Client(auth=(key, secret))
@@ -157,7 +158,17 @@ class ProductPage(RoutablePageMixin, Page):
                         "email": form.cleaned_data["email"],
                     }
                 })
-                return HttpResponseRedirect(f"{self.url}upload/{order_id}/")
+                
+                if self.personalized:
+                    return HttpResponseRedirect(f"{self.url}upload/{order_id}/")
+                
+                else:
+                    extra_context = {
+                        "title": "Order Completed",
+                        "body": "Relax. We will notify you when product will ready to dispatch. <a href='/'>Keep Shopping</a>"
+                    }
+                    
+                    return self.render(request, context_overrides=extra_context, template="product/result.html")
         
         return self.render(request, context_overrides={"form": form}, template="product/shipping.html")
 
@@ -171,6 +182,13 @@ class ProductPage(RoutablePageMixin, Page):
 
     @path('upload/<str:order_id>/')
     def upload_personalised_images(self, request, order_id=None):
+        if not self.personalized:
+            extra_context = {
+                "title": "Personalization Restricted",
+                "body": "This product does not have any customization features available. <a href='"+self.url+"'>Go Back</a>"
+            }
+            return self.render(request, context_overrides=extra_context, template="product/result.html")
+
         context = {
             "order_id": order_id
         }
