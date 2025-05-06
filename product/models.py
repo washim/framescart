@@ -50,7 +50,7 @@ class ProductPage(RoutablePageMixin, Page):
 
     content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "widgets"]
 
-    key, secret = settings.RAZORPAY_TEST_KEY
+    key, secret = settings.RAZORPAY_LIVE_KEY
     client = razorpay.Client(auth=(key, secret))
 
     @path('')
