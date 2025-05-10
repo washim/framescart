@@ -42,15 +42,19 @@
             <h2 style="text-align: center;">{{ block.value.heading }}</h2>
             <hr class="uk-divider-icon">
             <div class="uk-grid-small" uk-grid>
-                {% for trending_card in block.value.card %}
-                <a href="{{trending_card.page.url}}" class="text-decoration-remove uk-width-1-2@s uk-width-1-4@m">
+                {% for trending_card in block.value.pages %}
+                <a href="{{trending_card.url}}" class="text-decoration-remove uk-width-1-2@s uk-width-1-4@m">
                     <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
                         <div class="uk-card-media-top">
-                            {% image trending_card.card_image original style="width: 100%;" %}
+                            {% for block in trending_card.specific.widgets %}
+                                {% if block.block_type == "product_images" %}
+                                    {% image block.value.0 original style="width: 100%;" %}
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <div class="uk-card-body uk-padding-small">
-                            <p>{{trending_card.page.title}}</p>
-                            <h3 class="uk-card-title uk-margin-remove">₹{{trending_card.page.specific.price}}</h3>
+                            <p>{{trending_card.title}}</p>
+                            <h3 class="uk-card-title uk-margin-remove">₹{{trending_card.specific.price}}</h3>
                         </div>
                     </div>
                 </a>

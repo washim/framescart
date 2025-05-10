@@ -22,15 +22,12 @@ class HomePage(Page):
             ('heading', blocks.CharBlock(required=True)),
             ('category_image', blocks.ListBlock(blocks.StructBlock([
                 ("picture", ImageBlock(required=True)),
-                ("page", blocks.PageChooserBlock(required=False)),
+                ("pages", blocks.PageChooserBlock(required=False)),
             ]))),
         ])),
         ("trending", blocks.StructBlock([
             ('heading', blocks.CharBlock(required=True)),
-            ('card', blocks.ListBlock(blocks.StructBlock([
-                ('card_image', ImageBlock(required=True)),
-                ("page", blocks.PageChooserBlock(required=False)),
-            ]))),
+            ('pages', blocks.ListBlock(blocks.PageChooserBlock(required=False))),
         ])),
         ("html_panels", blocks.TextBlock(required=True)),
     ], blank=True, null=True)
