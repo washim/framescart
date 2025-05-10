@@ -10,7 +10,7 @@
     {% endfor %}
     <div class="uk-flex" uk-grid>
         <div class="uk-width-2-3@m">
-            <div uk-slideshow="animation: fade; ratio: 11:7">
+            <div uk-slideshow="animation: fade; ratio: 11:7;{% if request.GET.pindex %} index: {{request.GET.pindex}}{% endif %}">
                 <div class="uk-slideshow-items">
                     {% for block in page.widgets %}
                         {% if block.block_type == "product_images" %}
