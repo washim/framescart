@@ -45,8 +45,7 @@ class ProductPage(RoutablePageMixin, Page):
             ("ratting_given", blocks.IntegerBlock(required=True)),
             ("customer_verified", blocks.BooleanBlock(required=False)),
             ("customer_location", blocks.CharBlock(required=True)),
-        ]))),
-        ("breadcrumb", blocks.TextBlock(required=True)),
+        ])))
     ], blank=True, null=True)
 
     content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "personalized", "widgets"]

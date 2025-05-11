@@ -3,11 +3,18 @@
 
 {% block content %}
 <div class="uk-container">
-    {% for block in page.widgets %}
-        {% if block.block_type == "breadcrumb" %}
-            {{block.value|safe}}
-        {% endif %}
-    {% endfor %}
+    {% if self.get_ancestors|length > 1 %}
+    <nav style="margin-top: 15px;" aria-label="Breadcrumb">
+        <ul class="uk-breadcrumb">
+            {% for p in self.get_ancestors %}
+                {% if p.is_root == False %}
+                    <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            <li><span aria-current="page">{{ self.title }}</span></li>
+        </ul>
+    </nav>
+    {% endif %}
     <div class="uk-flex" uk-grid>
         <div class="uk-width-2-3@m">
             <div uk-slideshow="animation: fade; ratio: 11:7;{% if request.GET.pindex %} index: {{request.GET.pindex}}{% endif %}">
