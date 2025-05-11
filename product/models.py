@@ -39,6 +39,10 @@ class ProductPage(RoutablePageMixin, Page):
             ("product_attribute_key", blocks.CharBlock(required=True)),
             ("product_attribute_values", blocks.CharBlock(required=True)),
         ]))),
+        ("trending", blocks.StructBlock([
+            ('heading', blocks.CharBlock(required=True)),
+            ('pages', blocks.ListBlock(blocks.PageChooserBlock(required=False))),
+        ])),
         ("customer_reviews", blocks.ListBlock(blocks.StructBlock([
             ("name", blocks.CharBlock(required=True)),
             ("comments", blocks.RichTextBlock(required=True)),
