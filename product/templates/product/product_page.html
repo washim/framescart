@@ -123,7 +123,7 @@
     {% for block in page.widgets %}
         {% if block.block_type == "trending" %}
             <h3>{{ block.value.heading }}</h3>
-            <div class="uk-grid-small" uk-grid>
+            <div class="uk-grid-small margin-bottom-widget" uk-grid>
                 {% for trending_card in block.value.pages %}
                 <a href="{{trending_card.url}}" class="text-decoration-remove uk-width-1-2 uk-width-1-4@m">
                     <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
@@ -214,5 +214,6 @@
         </div>
         {% endif %}
     {% endfor %}
+    <span></span>
 </div>
 {% endblock %}
