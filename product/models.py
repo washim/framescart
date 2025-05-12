@@ -1,5 +1,7 @@
 import os
 import razorpay
+import requests
+import urllib.parse
 from django.db import models
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -161,6 +163,16 @@ class ProductPage(RoutablePageMixin, Page):
                         "email": form.cleaned_data["email"],
                     }
                 })
+
+                sms_to_send = f"""Dear {form.cleaned_data["fullname"]}, thank you for placing your order {order_id}. Your order will be delivered soon. Team Framescart Printing Services"""
+                sms_to_send_mobile = ["9738726005", form.cleaned_data["mobile"]]
+                sms_url = "https://www.smsalert.co.in/api/push.json?apikey={}&sender={}&mobileno={}&text={}"
+                requests.post(sms_url.format(
+                    settings.SMSALERT_API_KEY,
+                    settings.SMSALERT_SENDER_ID,
+                    ",".join(sms_to_send_mobile),
+                    urllib.parse.quote(sms_to_send)
+                ))
                 
                 if self.personalized:
                     return HttpResponseRedirect(f"{self.url}upload/{order_id}/")
