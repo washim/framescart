@@ -7,11 +7,14 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from cms.helper import extract_number_from_parentheses
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
 from wagtail.models import Page
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks
 from wagtail.images.blocks import ImageBlock
 from wagtail.contrib.routable_page.models import RoutablePageMixin, path
+from taggit.models import TaggedItemBase
 from .forms import ShippingForm
 
 
@@ -29,12 +32,17 @@ class ProductOrder(models.Model):
         return "Order: " + str(self.order_id)
 
 
+class ProductPageTag(TaggedItemBase):
+    content_object = ParentalKey('ProductPage', on_delete=models.CASCADE, related_name='tagged_items')
+
+
 class ProductPage(RoutablePageMixin, Page):
     description = RichTextField(blank=True)
     summary = RichTextField(blank=True)
     product_rating = models.IntegerField(default=3)
     price = models.IntegerField(default=300)
     personalized = models.BooleanField(default=True)
+    tags = ClusterTaggableManager(through=ProductPageTag, blank=True)
     widgets = StreamField([
         ("product_images", blocks.ListBlock(ImageBlock(required=True))),
         ("product_options", blocks.ListBlock(blocks.StructBlock([
@@ -54,7 +62,7 @@ class ProductPage(RoutablePageMixin, Page):
         ])))
     ], blank=True, null=True)
 
-    content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "personalized", "widgets"]
+    content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "personalized", "tags", "widgets"]
 
     key, secret = settings.RAZORPAY_LIVE_KEY if settings.RAZORPAY_SANDBOX == "no" else settings.RAZORPAY_TEST_KEY
     client = razorpay.Client(auth=(key, secret))
