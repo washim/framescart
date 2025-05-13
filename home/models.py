@@ -6,6 +6,7 @@ from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.images.blocks import ImageBlock
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
+from product.models import ProductPage
 
 
 @register_setting
@@ -29,6 +30,10 @@ class HomePage(Page):
             ('heading', blocks.CharBlock(required=True)),
             ('pages', blocks.ListBlock(blocks.PageChooserBlock(required=False))),
         ])),
+        ("synod", blocks.StructBlock([
+            ('heading', blocks.CharBlock(required=True)),
+            ('tag', blocks.CharBlock(required=True)),
+        ])),
         ("html_panels", blocks.TextBlock(required=True)),
     ], blank=True, null=True)
     body = RichTextField(blank=True, null=True)
@@ -37,3 +42,13 @@ class HomePage(Page):
         FieldPanel('widgets'),
         FieldPanel('body'),
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        
+        for block in self.widgets:
+            if block.block_type == "synod":
+                tag = block.value["tag"]
+                context["synod_pages"] = ProductPage.objects.filter(tags__name=block.value["tag"])
+        
+        return context

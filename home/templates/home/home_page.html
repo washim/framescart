@@ -37,6 +37,30 @@
                 {% endfor %}
             </div>
         </div>
+    {% elif block.block_type == "synod" %}
+        <div class="uk-container margin-bottom-widget">
+            <h2 style="text-align: center;">{{ block.value.heading }}</h2>
+            <hr class="uk-divider-icon">
+            <div class="uk-grid-small" uk-grid>
+                {% for synod_card in synod_pages %}
+                <a href="{{synod_card.url}}" class="text-decoration-remove uk-width-1-2 uk-width-1-4@m">
+                    <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
+                        <div class="uk-card-media-top">
+                            {% for block in synod_card.specific.widgets %}
+                                {% if block.block_type == "product_images" %}
+                                    {% image block.value.0 original style="width: 100%;" %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="uk-card-body uk-padding-small">
+                            <p>{{synod_card.title}}</p>
+                            <h3 class="uk-card-title uk-margin-remove">₹{{synod_card.specific.price}}</h3>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
     {% elif block.block_type == "trending" %}
         <div class="uk-container margin-bottom-widget">
             <h2 style="text-align: center;">{{ block.value.heading }}</h2>
