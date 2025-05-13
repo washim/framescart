@@ -42,13 +42,3 @@ class HomePage(Page):
         FieldPanel('widgets'),
         FieldPanel('body'),
     ]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        
-        for block in self.widgets:
-            if block.block_type == "synod":
-                tag = block.value["tag"]
-                context["synod_pages"] = ProductPage.objects.filter(tags__name=block.value["tag"])
-        
-        return context

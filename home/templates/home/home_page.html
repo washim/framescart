@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailimages_tags wagtailcore_tags %}
+{% load static wagtailimages_tags wagtailcore_tags home_tags %}
 
 {% block content %}
 {% for block in page.widgets %}
@@ -42,6 +42,7 @@
             <h2 style="text-align: center;">{{ block.value.heading }}</h2>
             <hr class="uk-divider-icon">
             <div class="uk-grid-small" uk-grid>
+                {% load_synod_pages block.value.tag as synod_pages %}
                 {% for synod_card in synod_pages %}
                 <a href="{{synod_card.url}}" class="text-decoration-remove uk-width-1-2 uk-width-1-4@m">
                     <div class="uk-card uk-card-default uk-box-shadow-hover-xlarge">
