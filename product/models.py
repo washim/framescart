@@ -53,6 +53,10 @@ class ProductPage(RoutablePageMixin, Page):
             ('heading', blocks.CharBlock(required=True)),
             ('pages', blocks.ListBlock(blocks.PageChooserBlock(required=False))),
         ])),
+        ("synod", blocks.StructBlock([
+            ('heading', blocks.CharBlock(required=True)),
+            ('tag', blocks.CharBlock(required=True)),
+        ])),
         ("customer_reviews", blocks.ListBlock(blocks.StructBlock([
             ("name", blocks.CharBlock(required=True)),
             ("comments", blocks.RichTextBlock(required=True)),
