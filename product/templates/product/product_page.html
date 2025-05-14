@@ -85,39 +85,41 @@
             <razorpay-trusted-business key="rzp_live_rGJH8hVXGEpbLR"></razorpay-trusted-business>
             {{ page.summary|richtext }}
             {% for block in page.widgets %}
-                {% if block.block_type == "product_options" and page.specific.stock_available %}
-                <h4 class="uk-margin-remove-top">Product Options</h4>
-                <form class="uk-form-stacked" method="post">
-                    {% csrf_token %}
-                    {% for product_option in block.value %}
-                    <div class="uk-margin">
-                        <label class="uk-form-label">{{product_option.product_attribute_key}}</label>
-                        <div class="uk-form-controls">
-                             <select class="uk-select" name="{{product_option.product_attribute_key}}">
-                                {% get_attribute_values product_option.product_attribute_values as results %}
-                                {% for item in results %}
-                                <option>{{ item }}</option>
-                                {% endfor %}
-                            </select>
+                {% if block.block_type == "product_options" %}
+                    {% if page.specific.stock_available %}
+                    <h4 class="uk-margin-remove-top">Product Options</h4>
+                    <form class="uk-form-stacked" method="post">
+                        {% csrf_token %}
+                        {% for product_option in block.value %}
+                        <div class="uk-margin">
+                            <label class="uk-form-label">{{product_option.product_attribute_key}}</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" name="{{product_option.product_attribute_key}}">
+                                    {% get_attribute_values product_option.product_attribute_values as results %}
+                                    {% for item in results %}
+                                    <option>{{ item }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    {% endfor %}
-                    <div class="uk-margin">
-                        <label class="uk-form-label">Quantity</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" name="quantity">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                        {% endfor %}
+                        <div class="uk-margin">
+                            <label class="uk-form-label">Quantity</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" name="quantity">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <input class="uk-button uk-button-primary" type="submit" value="Buy Now"/>
-                </form>
-                {% else %}
-                <button class="uk-button uk-button-danger">Out of Stock</button>
+                        <input class="uk-button uk-button-primary" type="submit" value="Buy Now"/>
+                    </form>
+                    {% else %}
+                    <button class="uk-button uk-button-danger">Out of Stock</button>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
