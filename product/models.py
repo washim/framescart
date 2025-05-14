@@ -42,6 +42,7 @@ class ProductPage(RoutablePageMixin, Page):
     product_rating = models.IntegerField(default=3)
     price = models.IntegerField(default=300)
     personalized = models.BooleanField(default=True)
+    stock_available = models.BooleanField(default=True)
     tags = ClusterTaggableManager(through=ProductPageTag, blank=True)
     widgets = StreamField([
         ("product_images", blocks.ListBlock(ImageBlock(required=True))),
@@ -66,7 +67,10 @@ class ProductPage(RoutablePageMixin, Page):
         ])))
     ], blank=True, null=True)
 
-    content_panels = Page.content_panels + ["description", "summary", "product_rating", "price", "personalized", "tags", "widgets"]
+    content_panels = Page.content_panels + [
+        "description", "summary", "product_rating", "price", "personalized", 
+        "stock_available", "tags", "widgets"
+    ]
 
     key, secret = settings.RAZORPAY_LIVE_KEY if settings.RAZORPAY_SANDBOX == "no" else settings.RAZORPAY_TEST_KEY
     client = razorpay.Client(auth=(key, secret))

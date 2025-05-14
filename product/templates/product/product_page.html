@@ -85,7 +85,7 @@
             <razorpay-trusted-business key="rzp_live_rGJH8hVXGEpbLR"></razorpay-trusted-business>
             {{ page.summary|richtext }}
             {% for block in page.widgets %}
-                {% if block.block_type == "product_options" %}
+                {% if block.block_type == "product_options" and page.specific.stock_available %}
                 <h4 class="uk-margin-remove-top">Product Options</h4>
                 <form class="uk-form-stacked" method="post">
                     {% csrf_token %}
@@ -116,6 +116,8 @@
                     </div>
                     <input class="uk-button uk-button-primary" type="submit" value="Buy Now"/>
                 </form>
+                {% else %}
+                <button class="uk-button uk-button-danger">Out of Stock</button>
                 {% endif %}
             {% endfor %}
         </div>
