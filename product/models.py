@@ -41,6 +41,7 @@ class ProductPage(RoutablePageMixin, Page):
     summary = RichTextField(blank=True)
     product_rating = models.IntegerField(default=3)
     price = models.IntegerField(default=300)
+    mrp = models.IntegerField(default=300)
     personalized = models.BooleanField(default=True)
     stock_available = models.BooleanField(default=True)
     tags = ClusterTaggableManager(through=ProductPageTag, blank=True)
@@ -68,7 +69,7 @@ class ProductPage(RoutablePageMixin, Page):
     ], blank=True, null=True)
 
     content_panels = Page.content_panels + [
-        "description", "summary", "product_rating", "price", "personalized", 
+        "description", "summary", "product_rating", "price", "mrp", "personalized", 
         "stock_available", "tags", "widgets"
     ]
 

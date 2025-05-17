@@ -55,7 +55,10 @@
                         </div>
                         <div class="uk-card-body uk-padding-small">
                             <p>{{synod_card.title}}</p>
-                            <h3 class="uk-card-title uk-margin-remove">₹{{synod_card.specific.price}}</h3>
+                            <div class="uk-flex">
+                                <h3 class="uk-card-title uk-margin-right">₹{{synod_card.specific.price}}</h3>
+                                <div class="uk-margin-remove uk-text-danger"><s>₹{{synod_card.specific.mrp}}</s></div>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -79,7 +82,10 @@
                         </div>
                         <div class="uk-card-body uk-padding-small">
                             <p>{{trending_card.title}}</p>
-                            <h3 class="uk-card-title uk-margin-remove">₹{{trending_card.specific.price}}</h3>
+                            <div class="uk-flex">
+                                <h3 class="uk-card-title uk-margin-right">₹{{trending_card.specific.price}}</h3>
+                                <div class="uk-margin-remove uk-text-danger"><s>₹{{trending_card.specific.mrp}}</s></div>
+                            </div>
                         </div>
                     </div>
                 </a>
