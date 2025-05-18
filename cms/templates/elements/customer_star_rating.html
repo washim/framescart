@@ -1,0 +1,38 @@
+{% load static %}
+{% if reviewer.ratting_given == 1 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+{% elif reviewer.ratting_given == 2 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+{% elif reviewer.ratting_given == 3 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+{% elif reviewer.ratting_given == 4 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+{% elif reviewer.ratting_given == 5 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
+{% else %}
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
+{% endif %}

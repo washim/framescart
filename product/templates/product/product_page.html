@@ -156,7 +156,7 @@
                                     <div class="uk-width-expand">
                                         <h4 class="uk-comment-title uk-margin-remove">{{reviewer.name}}</h4>
                                         <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                            <li>{% include "elements/star_rating.html" with page=reviewer %}</li>
+                                            <li>{% include "elements/customer_star_rating.html" with reviewer=reviewer %}</li>
                                             <li>{% if reviewer.customer_verified %}Verified{% else %}unknown{% endif %}</li>
                                             <li>{{ reviewer.customer_location }}</li>
                                         </ul>
