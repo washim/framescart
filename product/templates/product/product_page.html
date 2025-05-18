@@ -43,43 +43,7 @@
             <h2>{{ page.title }}</h2>
             <h3 class="uk-margin-remove">₹{{ page.price }}</h3>
             <div class="uk-background-muted uk-padding-small">
-                {% if page.product_rating == 1 %}
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                {% elif page.product_rating == 2 %}
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                {% elif page.product_rating == 3 %}
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                {% elif page.product_rating == 4 %}
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                {% elif page.product_rating == 5 %}
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
-                {% else %}
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                <img src="{% static 'images/rating-black.svg' %}" width="20"/>
-                {% endif %}
+                {% include "elements/star_rating.html" with page=page %}
                 <span style="color: black; top: 3px; position: relative;">Based On Reviews</span>
             </div>
             <razorpay-trusted-business key="rzp_live_rGJH8hVXGEpbLR"></razorpay-trusted-business>
@@ -190,45 +154,7 @@
                                     <div class="uk-width-expand">
                                         <h4 class="uk-comment-title uk-margin-remove">{{reviewer.name}}</h4>
                                         <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                                            <li>
-                                                {% if reviewer.ratting_given == 1 %}
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% elif reviewer.ratting_given == 2 %}
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% elif reviewer.ratting_given == 3 %}
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% elif reviewer.ratting_given == 4 %}
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% elif reviewer.ratting_given == 5 %}
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-yellow.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% else %}
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                <img src="{% static 'images/rating-black.svg' %}" width="20" style="margin-right: 5px;"/>
-                                                {% endif %}
-                                            </li>
+                                            <li>{% include "elements/star_rating.html" with page=reviewer %}</li>
                                             <li>{% if reviewer.customer_verified %}Verified{% else %}unknown{% endif %}</li>
                                             <li>{{ reviewer.customer_location }}</li>
                                         </ul>

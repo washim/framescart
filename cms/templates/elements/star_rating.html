@@ -1,0 +1,38 @@
+{% load static %}
+{% if page.product_rating == 1 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+{% elif page.product_rating == 2 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+{% elif page.product_rating == 3 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+{% elif page.product_rating == 4 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+{% elif page.product_rating == 5 %}
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+<img src="{% static 'images/rating-yellow.svg' %}" width="20"/>
+{% else %}
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+<img src="{% static 'images/rating-black.svg' %}" width="20"/>
+{% endif %}
