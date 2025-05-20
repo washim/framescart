@@ -4,8 +4,8 @@ __pycache__/
 *.log
 *.pot
 *.db
-media/
-static/
+/media
+/static
 tmp/
 temp/
 *.swp
