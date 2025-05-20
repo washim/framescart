@@ -1,4 +1,7 @@
+import os
 from django.shortcuts import render
+from django.conf import settings
+from django.templatetags.static import static
 
 from wagtail.admin.viewsets.model import ModelViewSet
 from .models import ProductOrder
@@ -15,3 +18,18 @@ class ProductOrderViewSet(ModelViewSet):
 
 
 product_order_viewset = ProductOrderViewSet("orders")
+
+def collections(request):
+    painting_thumb = os.listdir(settings.STATIC_ROOT + "/painting-thumbnails")
+    images = []
+
+    page_size = 18
+    page_number = int(request.GET.get("page_number", 1))
+    start_index = (page_number - 1) * page_size
+    end_index = start_index + page_size
+
+    for item in painting_thumb[start_index:end_index]:
+        file_name = item.split(".")[0]
+        images.append({"name": file_name, "url": static("painting-thumbnails")})
+
+    return render(request, "product/collections.html", {"collections": images, "previous": page_number - 1, "next": page_number + 1})

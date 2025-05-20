@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Image Collections{% endblock %}
+
+{% block content %}
+<div class="uk-container uk-margin-bottom">
+    <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom">Image Collections</h3>
+    <div uk-grid>
+        {% for pic in collections %}
+        <div class="uk-background-cover uk-light uk-width-1-6">
+            <img src="{{pic.url}}" width="150" height="150"/>
+        </div>
+        {% endfor %}
+    </div>
+    <nav>
+        <ul class="uk-pagination">
+            {% if previous > 0 %}
+            <li><a href="?page_number={{previous}}"><span class="uk-margin-xsmall-right" uk-pagination-previous></span> Previous</a></li>
+            {% endif %}
+            <li class="uk-margin-auto-left uk-margin-right"><a href="?page_number={{next}}">Next <span class="uk-margin-xsmall-left" uk-pagination-next></span></a></li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}
