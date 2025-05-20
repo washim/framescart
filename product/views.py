@@ -1,7 +1,6 @@
 import os
 from django.shortcuts import render
 from django.conf import settings
-from django.templatetags.static import static
 
 from wagtail.admin.viewsets.model import ModelViewSet
 from .models import ProductOrder
@@ -30,6 +29,6 @@ def collections(request):
 
     for item in painting_thumb[start_index:end_index]:
         file_name = item.split(".")[0]
-        images.append({"name": file_name, "url": static("painting-thumbnails")})
+        images.append({"name": file_name, "url": "/static/painting-thumbnails/" + item})
 
     return render(request, "product/collections.html", {"collections": images, "previous": page_number - 1, "next": page_number + 1})

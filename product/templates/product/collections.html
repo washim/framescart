@@ -7,8 +7,9 @@
     <h3 class="uk-padding-small uk-padding-remove-left uk-padding-remove-bottom">Image Collections</h3>
     <div uk-grid>
         {% for pic in collections %}
-        <div class="uk-background-cover uk-light uk-width-1-6">
-            <img src="{{pic.url}}" width="150" height="150"/>
+        <div class="uk-background-cover uk-width-1-6">
+            <img src="{{pic.url}}" width="250" height="250"/>
+            <div>{{pic.name}}</div>
         </div>
         {% endfor %}
     </div>
