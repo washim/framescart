@@ -54,7 +54,7 @@
             {% for block in page.widgets %}
                 {% if block.block_type == "product_options" %}
                     {% if page.specific.stock_available %}
-                    <h4 class="uk-margin-remove-top">Product Options</h4>
+                    <h4>Product Options</h4>
                     <form class="uk-form-stacked" method="post">
                         {% csrf_token %}
                         {% for product_option in block.value %}
