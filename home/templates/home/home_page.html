@@ -30,7 +30,7 @@
                 <div class="uk-width-1-3 uk-width-1-6@m">
                     <div class="uk-flex uk-flex-column">
                         {% image cimg.picture original as cate_image %}
-                        {% image cimg.picture original class="uk-width-1-1" %}
+                        <a href="{{cimg.pages.url}}">{% image cimg.picture original class="uk-width-1-1" %}</a>
                         <a style="text-align: center; margin-top: 10px;" href="{{cimg.pages.url}}">{{cate_image.image.title}}</a>
                     </div>
                 </div>
