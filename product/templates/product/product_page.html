@@ -27,11 +27,11 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <ul class="uk-thumbnav uk-margin">
+                <ul class="uk-thumbnav uk-margin-top">
                     {% for block in page.widgets %}
                         {% if block.block_type == "product_images" %}
                             {% for pimg in block.value %}
-                            <li uk-slideshow-item="{{ forloop.counter0 }}"><a href="#">{% image pimg fill-80x50 %}</a></li>
+                            <li class="uk-margin-small-bottom" uk-slideshow-item="{{ forloop.counter0 }}"><a href="#">{% image pimg fill-80x50 %}</a></li>
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
